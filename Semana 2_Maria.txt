@@ -1,0 +1,12 @@
+﻿1. Diferencie CI, CD e Deploy Contínuo
+* CI : A integração contínua é para automatizar a integração do código, então a cada mudança no repositório(pipeline) o código é compilado e testado (testes iniciais automatizados), evitando fazer esses testes só no final para não causar um problema maior.
+* CD :Entrega Contínua é um passo a mais na integração contínua, além de validar os códigos automatiza as etapas de builds teste e empacotamento, reduzindo o tempo entre desenvolvimento e entrega.
+* Deploy Contínuo: Não é mais necessário que alguém implemente as mudanças commitadas na produção, é automatizado esse processo de deploy e merge, então desde o commit até a produção é tudo automatizado 
+
+
+2. Explique o pipeline de entrega
+Para uma entrega contínua utilizamos o pipeline de entrega, podemos pensar nele como uma esteira. Com a entrega de um commit o pipeline é acionado, realizando o build e os testes automatizados e realizando a implantação para o ambiente de homologação,e por fim liberando para a produção(release), automatizando todo o processo.
+
+
+3. Cite ao menos um padrão de release e sua utilidade
+* Canary Release: Temos duas versões do software rodando, a versão estável e após o deploy da nova versão ela começa a atender uma porcentagem das requisições, por exemplo 1%, se tudo der certo vai aumentando gradativamente até assumir todo o tráfego. O release dessa forma minimiza o risco e o impacto de falhas na produção, pois com o controle do tráfego é possível avaliar a qualidade da nova versão, e caso algo aconteça voltar todo o tráfego para a anterior, uma vez que ela só é tirada de produção quando a nova versão estiver firmada.
