@@ -1,0 +1,3 @@
+Link do gitlab com a pipeline mostrada em aula. Removi o comando do npm para rodar o teste já que esse comando não está configurado e dava o erro na pipeline
+
+https://gitlab.mppr.mp.br/mfmsouza/alura_semana2/-/pipelines
