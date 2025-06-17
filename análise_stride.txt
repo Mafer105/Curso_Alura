@@ -1,0 +1,32 @@
+Funcionalidade : login
+
+Spoofing : 
+ - Existe risco? Sim  
+ - Qual? Atacante pode obter as credenciais de um usuário legítimo e se passar por ele.
+ - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado ou até mesmo um usuário interno tentando acessar informações com mais privelégios
+
+Tampering:
+ - Existe risco? Sim  
+ - Qual? Atacante pode modificar os dados passados pela url para tentar acessar o sistema
+ - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+
+Repudiation:
+ - Existe risco? Sim  
+ - Qual? Após o login, se os logs de login não forem mantidos, o usuário pode realizar diversas ações e negá-las
+ - Que tipo de Atacante se beneficiaria? Um usuário mal intencionado
+
+Information Disclosure(segundo o vídeo seria o usuário ter acesso a informações que não deveria):
+ - Existe risco? Sim  
+ - Qual? se a conexão não for segura (HTTPS) as credenciais do usuário podem ser capturadas por alguém externo
+ - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+
+Denial of Service:
+ - Existe risco? Sim  
+ - Qual? um ataque com a inteção de sobrecarregar o sistema, ou de bloquaear o usuário legítimo de acessar sua conta, poderia ocorrer por meio de suscessivas 
+ tentavias de login com senhas incorretas.
+ - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+
+Denial of Service 
+ - Existe risco? Sim  
+ - Qual? um ataque poderia tentar manipular o token de autentcação após o login para que lhe fosse concedido acessos administrativos
+ - Que tipo de Atacante se beneficiaria? Agente externo ou osuário mal intencionado 
