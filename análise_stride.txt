@@ -2,31 +2,62 @@ Funcionalidade : login
 
 Spoofing : 
  - Existe risco? Sim  
- - Qual? Atacante pode obter as credenciais de um usuário legítimo e se passar por ele.
- - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado ou até mesmo um usuário interno tentando acessar informações com mais privelégios
+ - Qual?  Um atacante se passa por um usuário legítimo ao obter e utilizar suas credenciais de acesso (usuário e senha).
+ - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+ - Cenários específicos de ataque:
+    * Phishing: O atacante cria uma página de login falsa (clone) e engana o usuário para que ele insira suas credenciais.
+    * Credential Stuffing: O atacante utiliza listas de credenciais vazadas de outros sistemas, apostando que o usuário reutilizou a mesma senha.
+    * Keylogger/Malware: O dispositivo do usuário está infectado com um software que captura tudo o que é digitado.  
+
+--------------------------------------
 
 Tampering:
  - Existe risco? Sim  
- - Qual? Atacante pode modificar os dados passados pela url para tentar acessar o sistema
- - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+ - Qual? Um atacante modifica os dados que são trocados entre o cliente (navegador) e o servidor durante ou após o processo de login para obter um resultado inesperado, como contornar a validação.
+ - Que tipo de Atacante se beneficiaria? Agente externo mal-intencionado ou usuário com conhecimento técnico.
+ - Cenários específicos de ataque:
+    * Manipulação de Parâmetros: Alterar dados enviados no corpo da requisição ou na URL para explorar falhas na validação do servidor.
+    * Manipulação de Cookies/Tokens: Após o login, alterar o conteúdo de um cookie ou token de sessão para tentar escalar privilégios ou personificar outro usuário. 
+
+-------------------------------------------
 
 Repudiation:
  - Existe risco? Sim  
- - Qual? Após o login, se os logs de login não forem mantidos, o usuário pode realizar diversas ações e negá-las
- - Que tipo de Atacante se beneficiaria? Um usuário mal intencionado
+ - Qual? Um usuário (legítimo ou um atacante que obteve acesso) realiza uma ação (neste caso, o login) e posteriormente nega tê-la feito. A falta de provas impede a responsabilização.
+ - Que tipo de Atacante se beneficiaria? Um usuário mal-intencionado ou um agente externo tentando cobrir seus rastros.
+ - Cenários específicos de ataque:
+    * Logs de Auditoria Detalhados: Registrar todas as tentativas de login (sucesso e falha), incluindo: timestamp, endereço IP de origem, user-agent do navegador e o nome de usuário utilizado.
+    * Proteção dos Logs: Garantir que os logs sejam imutáveis e protegidos contra acesso não autorizado ou exclusão. Idealmente, enviá-los para um sistema de logging centralizado e seguro.
+    * Trilha de Auditoria: Manter um histórico claro de ações críticas associadas à sessão do usuário após o login.
 
-Information Disclosure(segundo o vídeo seria o usuário ter acesso a informações que não deveria):
+---------------------------------------
+
+Information Disclosure:
  - Existe risco? Sim  
- - Qual? se a conexão não for segura (HTTPS) as credenciais do usuário podem ser capturadas por alguém externo
+ - Qual? Exposição de informações sensíveis a um atacante. No contexto do login, isso pode ser desde as próprias credenciais até informações sobre a arquitetura do sistema.
  - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+ - Cenários específicos de ataque:
+    * Captura de Credenciais: Se a comunicação não for HTTPS, um atacante na mesma rede pode "farejar" (sniffing) o tráfego e capturar usuário e senha em texto plano.
+    * Mensagens de Erro Verbosas: O sistema retorna mensagens de erro diferentes para "usuário inexistente" e "senha incorreta", permitindo que um atacante enumere usuários válidos no sistema.
+    * Vazamento em Logs do Navegador: Informações sensíveis (tokens, dados do usuário) sendo impressas no console do navegador para depuração e esquecidas em produção.
+
+---------------------------------------------
 
 Denial of Service:
  - Existe risco? Sim  
- - Qual? um ataque com a inteção de sobrecarregar o sistema, ou de bloquaear o usuário legítimo de acessar sua conta, poderia ocorrer por meio de suscessivas 
- tentavias de login com senhas incorretas.
+ - Qual? Impedir que usuários legítimos consigam acessar suas contas ou utilizar o sistema, seja por sobrecarga de recursos ou por bloqueio de contas.
  - Que tipo de Atacante se beneficiaria? Agente externo mal intencionado
+ - Cenários específicos de ataque:
+    * Brute Force / Password Spraying: Um atacante usa um bot para realizar milhares de tentativas de login. Isso pode sobrecarregar o servidor ou, se houver uma política de bloqueio, pode bloquear as contas de usuários legítimos.
+    * Resource Exhaustion: Enviar um volume massivo de requisições de login para consumir os recursos do servidor (CPU, memória, conexões de banco de dados).
 
-Denial of Service 
+----------------------------------------------
+
+Elevation of Privilege
  - Existe risco? Sim  
- - Qual? um ataque poderia tentar manipular o token de autentcação após o login para que lhe fosse concedido acessos administrativos
+ - Qual? Um atacante ou um usuário com poucos privilégios consegue obter acesso a funcionalidades ou dados de um nível superior (como administrador) explorando uma falha no sistema. 
  - Que tipo de Atacante se beneficiaria? Agente externo ou osuário mal intencionado 
+ - Cenários específicos de ataque:
+    * SQL Injection: Inserir comandos SQL maliciosos nos campos de usuário e/ou senha para contornar a lógica de autenticação
+    * Manipulação de Token Pós-Login: Um usuário autenticado modifica seu token de sessão (JWT) para alterar seu perfil de user para admin. Se o servidor não validar a assinatura do token corretamente, ele pode aceitar a alteração.
+    * Path/Directory Traversal: Acessar URLs de áreas administrativas diretamente, sem ter a permissão necessária, explorando uma falha no controle de autorização.
